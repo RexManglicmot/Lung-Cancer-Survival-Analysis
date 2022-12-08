@@ -2,7 +2,7 @@
 title: "Survival Rate"
 Author: Rexy Manglicmot
 output: 
-  html_notebook: 
+  github_document: 
     toc: yes
 ---
 
