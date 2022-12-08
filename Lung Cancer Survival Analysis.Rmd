@@ -1,0 +1,201 @@
+---
+title: "Survival Rate"
+Author: Rexy Manglicmot
+output: 
+  html_notebook: 
+    toc: yes
+---
+
+### Working Document
+
+Things Need To DO:
+
+1. More Theory of Surival Analysis
+2. Create a dumbell chart
+2. Limitations
+3. Check Grammar
+
+### Introduction
+Survival Rate is a method in which we can measure the time of a an event from the start to finish. 
+
+
+
+### Loading the Libraries
+```{r, warning=FALSE, message=FALSE}
+#install packages
+#install.packages('survival') #installed on 12/3/22
+#install.packages('ggpubr') installed on 12/3/22
+#install.packages('skimr') #installed on 12/4/22
+
+library(survival)
+library(tidyverse)
+library(ggpubr)
+library(skimr)
+library(ggpubr)
+```
+### Loading the Data
+```{r}
+#view the names of the dataset in Survival package
+print(data(package = "survival"))
+```
+So we see that the package has a bunch of datasets we can work with. So, let's choose the cancer dataset and view it. Let's store the dataset into a new object, data, for data cleaning.
+
+```{r}
+#see the structure of the dataset
+str(cancer)
+```
+
+
+```{r,warning=FALSE, message=FALSE}
+#provides more info about the dataset and the variables, which allows for
+#better data cleaning
+?cancer
+
+#store cancer dataset into a new object for data manipulation
+data <- cancer
+```
+
+### Cleaning the Data
+There are a couple tasks that needs to be done.
+
+First, we need to delete the number of NA values. Because each observation is an individual, it is best to delete the obersvation to get the dataset tidy. It is also not best to find take the average of some sort  unlike business data (i.e. monthly profit).
+
+Second, we need to convert the variables into appropoate classes based on the data description in ?cancer. For example the variable status is a number and needs to convereted to a factor. 
+
+```{r}
+#Count the number of NAs in the dataframe
+sum((is.na(data)))
+```
+We have 67 NA values within out dataset. Let's use another method to locate the speicific row and location where we might find these values.
+
+```{r}
+#find out specific observations in which there are NAs
+which(is.na(data), arr.ind=TRUE)
+```
+Looking at the output we see a good amount in the dougle digits as well as the triple digits (100 and 200s). Interestingly though, we see that many of the NA values are in the 9th and 10 rows, the meal.cal and wt.loss variables. Let's count the number of NAs in each variable.
+
+```{r}
+#count the number of NAs within each column
+colSums(is.na(data))
+```
+This is interesting. We see that majority of the NAs are in columns are in meal.cal and wt.loss. The most important variables for the survival analysis are time and status which have no NAs. Much data analysis is usually done with complete datasets, so in our case, I will delete rows that contain NAs and work wit that data set. 
+
+Nonetheless, it would interesting to see if the survival analysis would significantly change. So, I will plot 2: one with the complete data set and the other with the tidy data set, data2.
+
+```{r}
+#delete all the rows with NAs
+data2 <- na.omit(data)
+
+#count the number of NAs within each column
+colSums(is.na(data2))
+```
+
+
+```{r}
+#creat list of variable names into a object
+names <- c('status', 'sex', 'ph.ecog')
+  
+#convert some of the variabes to appropiate classes using 1 line of code
+data2[names] <- lapply(data2[names], factor)
+
+#check str again
+sapply(data2, class)
+
+#get rid of irrelevant coumns
+data2 <- data2[,-1]
+```
+Great! We have correctly cleaned out data and now let's move on the the best part, EDA!
+
+### Exploratory Data Analysis
+
+Let's review some of the basic summary statistics via a new function, skimr. 
+```{r}
+#a function to call summary statistics
+skim(data2)
+```
+With this function, we can see that the summary statistics of all the variables. The mean age is 63 years old, total meal calories is 929 and the weight loss is 9.8 pounds. 
+
+Although the mean age is 63, let's split this into men and women.
+
+This is interesting because both men and women have different calorie intake because the naturally difference in body composition. However, when diagnosed with cancer this could change So in the next steps, lets plot those distribution.
+
+Another interesting thing is the weight loss. It would be interested to see how their calories differ as well as the weight loss. So let's plot those. 
+
+#Lastly, the ph.karno and pat.karno are reported scores by the physican and patient. It would be interesting to see if #there is an relationship between the two.
+
+
+
+
+```{r}
+#histogram of men and women ages
+ggplot(data2, aes(x=age, group=sex, fill=sex)) +
+  geom_histogram(bins = 20, color= 'black') +
+  scale_fill_brewer(palette="Dark2") +
+  facet_wrap(~sex) +
+  theme_minimal()
+
+```
+Based on this, we see that there males have a symmetric distribution whereas the female is right-skewed with a few outliers to the left.  
+
+```{r}
+ggplot(data2, aes(sex, meal.cal)) +
+  geom_hex(bins = 20, color = "white")+
+  #NEED TO CHANGE COLORS
+  scale_fill_gradient(low =  "#00AFBB", high = "#FC4E07")+
+  theme_minimal()
+
+ggplot(data2, aes(x = sex, y= meal.cal, fill = sex)) +
+ geom_dotplot(binaxis='y', stackdir='center') +
+  scale_fill_brewer(palette="Dark2") +
+  theme_minimal()
+```
+Because we are working with a small dataset, we can use a dotplot to see the number of calories both sexes had during the experiment. It seems they had roughly ~1000 calrories for both groups. (Boxplot is in the appendix).
+
+```{r}
+data2 %>%
+  group_by(sex) %>%
+  summarize(mean(meal.cal))
+```
+We see that the males have a slight higher meal calories than the females. 
+
+
+```{r}
+ggplot(data2, aes(x=time, y=wt.loss, fill=sex)) +
+  geom_point() +
+  geom_smooth() +
+  facet_wrap(~sex) +
+  theme_minimal()
+```
+```{r}
+ggplot(data2, aes(x=age, y=wt.loss)) +
+  geom_point() +
+  geom_smooth(linetype="dashed",
+             color="orange", fill="lightpink") +
+  theme_bw()
+```
+
+
+
+### Surivival Rate Analysis
+
+
+### Limitations
+### Conclusion
+### Appendix
+
+```{r}
+ggplot(data2, aes(x=meal.cal, y=wt.loss)) +
+  geom_point() +
+  geom_smooth(linetype="dashed",
+             color="darkred", fill="lightblue") +
+  theme_bw()
+```
+
+```{r}
+ggplot(data2, aes(sex, meal.cal, fill= sex)) +
+  geom_boxplot() +
+  scale_fill_brewer(palette="Dark2") +
+  theme_minimal()
+```
+
+
