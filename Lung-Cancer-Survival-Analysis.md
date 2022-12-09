@@ -36,6 +36,7 @@ Things Need To DO:
 6.  General Statistics about lung cancer and WHY it is important to
     investigate
 7.  Create some cool looking plots
+8.  Get Feedback
 
 ### Introduction
 

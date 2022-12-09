@@ -18,6 +18,7 @@ Things Need To DO:
 4. More info on Lung Cancer and the NCCTG
 5. General Statistics about lung cancer and WHY it is important to investigate
 6. Create some cool looking plots
+7. Get Feedback 
 
 
 ### Introduction
