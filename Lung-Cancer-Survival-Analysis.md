@@ -1,7 +1,8 @@
-Survival Rate
+Lung Cancer Survival Analysis
 ================
 
--   <a href="#working-document" id="toc-working-document">Working
+-   <a href="#status-continuing-working-document"
+    id="toc-status-continuing-working-document">Status: Continuing Working
     Document</a>
 -   <a href="#introduction" id="toc-introduction">Introduction</a>
 -   <a href="#loading-the-libraries" id="toc-loading-the-libraries">Loading
@@ -18,19 +19,68 @@ Survival Rate
 -   <a href="#conclusion" id="toc-conclusion">Conclusion</a>
 -   <a href="#appendix" id="toc-appendix">Appendix</a>
 
-### Working Document
+### Status: Continuing Working Document
+
+Hi everyone. I’m continuing building my data analysis and R skills. As
+such, I would love feedback to better improve this project via
+<rexmanglicmot@gmail.com>. Any mistakes and misrepresentation of the
+data are my own.
 
 Things Need To DO:
 
-1.  More Theory of Surival Analysis
-2.  Create a dumbell chart
+1.  More Theory of Survival Analysis
+2.  Create a dumbbell chart
 3.  Limitations
 4.  Check Grammar
+5.  More info on Lung Cancer and the NCCTG
+6.  General Statistics about lung cancer and WHY it is important to
+    investigate
+7.  Create some cool looking plots
 
 ### Introduction
 
+![](https://www.ilcn.org/wp-content/uploads/2021/12/142.jpg)
+
+Lung Cancer is the leading cause of most cancer deaths, taking almost up
+to 25%.[^1]
+
 Survival Rate is a method in which we can measure the time of a an event
 from the start to finish.
+
+This project will organized in the following chapters:
+
+1.  Loading the Libraries
+2.  Loading the Data
+3.  Cleaning the Data
+4.  Exploratory Data Analysis
+5.  Survival Analysis
+6.  Limitations
+7.  Conclusion
+8.  Appendix
+
+A special acknowledgement to Loprinzo CL. et al.\[Loprinzi CL. Laurie
+JA. Wieand HS. Krook JE. Novotny PJ. Kugler JW. Bartel J. Law M. Bateman
+M. Klatt NE. et al. Prospective evaluation of prognostic variables from
+patient-completed questionnaires. North Central Cancer Treatment Group.
+Journal of Clinical Oncology. 12(3):601-7, 1994.\] for their lung cancer
+research and also in providing this dataset in the survival package.
+
+The raw dataset attributes are:
+
+1.  inst: Institution code
+2.  time: Survival time in days
+3.  status: censoring status 1=censored, 2=dead
+4.  age: Age in years
+5.  sex: Male=1 Female=2
+6.  ph.ecog: ECOG performance score as rated by the physician.
+    0=asymptomatic, 1= symptomatic but completely ambulatory, 2= in bed
+    \<50% of the day, 3= in bed \> 50% of the day but not bedbound, 4 =
+    bedbound
+7.  ph.karno: Karnofsky performance score (bad=0-good=100) rated by
+    physician
+8.  pat.karno: Karnofsky performance score as rated by patient
+9.  meal.cal: Calories consumed at meals
+10. wt.loss: Weight loss in last six months (pounds)
 
 ### Loading the Libraries
 
@@ -315,6 +365,7 @@ ggplot(data2, aes(x=age, group=sex, fill=sex)) +
 ```
 
 ![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
+
 Based on this, we see that there males have a symmetric distribution
 whereas the female is right-skewed with a few outliers to the left.
 
@@ -383,11 +434,16 @@ ggplot(data2, aes(x=age, y=wt.loss)) +
 
 ![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-15-1.png)<!-- -->
 
+Now that we have explored the data. Let’s go more into the theory of
+survial analysis.
+
 ### Surivival Rate Analysis
 
 ### Limitations
 
 ### Conclusion
+
+Will complete this part when the above sections are complete.
 
 ### Appendix
 
@@ -411,3 +467,5 @@ ggplot(data2, aes(sex, meal.cal, fill= sex)) +
 ```
 
 ![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-17-1.png)<!-- -->
+
+[^1]: <https://www.cancer.org/cancer/lung-cancer/about/key-statistics.html>
