@@ -13,8 +13,8 @@ Lung Cancer Survival Analysis
     Data</a>
 -   <a href="#exploratory-data-analysis"
     id="toc-exploratory-data-analysis">Exploratory Data Analysis</a>
--   <a href="#surivival-rate-analysis"
-    id="toc-surivival-rate-analysis">Surivival Rate Analysis</a>
+-   <a href="#survival-rate-analysis"
+    id="toc-survival-rate-analysis">Survival Rate Analysis</a>
 -   <a href="#limitations" id="toc-limitations">Limitations</a>
 -   <a href="#conclusion" id="toc-conclusion">Conclusion</a>
 -   <a href="#appendix" id="toc-appendix">Appendix</a>
@@ -42,10 +42,16 @@ Things Need To DO:
 ![](https://www.ilcn.org/wp-content/uploads/2021/12/142.jpg)
 
 Lung Cancer is the leading cause of most cancer deaths, taking almost up
-to 25%.[^1]
+to 25%.[^1]Further, it is the leading cause of cancer in both men and
+females. [^2] According to a 2019 US statistic, it is the leading cause
+of cancer behind female breast cancer and male prostate cancer.[^3]
 
 Survival Rate is a method in which we can measure the time of a an event
 from the start to finish.
+
+By studying the survival rate of lung cancer patients, local and state
+governments are able to educate the population for the impending problem
+they can likely face. By understanding surivival rates,
 
 This project will organized in the following chapters:
 
@@ -57,13 +63,11 @@ This project will organized in the following chapters:
 6.  Limitations
 7.  Conclusion
 8.  Appendix
+9.  Inspiration for this project
 
-A special acknowledgement to Loprinzo CL. et al.\[Loprinzi CL. Laurie
-JA. Wieand HS. Krook JE. Novotny PJ. Kugler JW. Bartel J. Law M. Bateman
-M. Klatt NE. et al. Prospective evaluation of prognostic variables from
-patient-completed questionnaires. North Central Cancer Treatment Group.
-Journal of Clinical Oncology. 12(3):601-7, 1994.\] for their lung cancer
-research and also in providing this dataset in the survival package.
+A special acknowledgement to Loprinzo CL. et al.[^4] for their lung
+cancer research and also in providing this dataset in the survival
+package.
 
 The raw dataset attributes are:
 
@@ -437,7 +441,32 @@ ggplot(data2, aes(x=age, y=wt.loss)) +
 Now that we have explored the data. Let’s go more into the theory of
 survial analysis.
 
-### Surivival Rate Analysis
+### Survival Rate Analysis
+
+<img
+src="https://www.ncss.com/wp-content/uploads/2012/10/Life-Table-Analysis-Survival-Plot.png"
+style="width:75.0%" />
+
+Survival Analysis (SA) is the studying of the time between the entry of
+a study to its subsequent event. SA can be broken down into Survival and
+Time measures.
+
+In terms of survival measures, it has traditionally been termed for
+studies regarding health outcomes, i.e., the time a person starts a drug
+treatment to their death, the time it takes for a durg addict to
+resrtart taking drugs after leaving a drug rehab center. However, it has
+also been used for business purposes, such as the amount of time it
+takes for a customer to buy a product once an email with a coupon is
+delivered to them or the time. Therefore, SA is used for a wide vareity
+of applications across a plethora of industries. In terms of time
+measures, it can be mesaured by days, weeks, years, etc. depending on
+the design of the experiment.
+
+Looking at the graph above, it can start at the top of the y-axis
+(survival measure) and decreases downward as the line moves across the
+x-axis (time).
+
+Censoring is an important concept in SA and occurs
 
 ### Limitations
 
@@ -469,3 +498,13 @@ ggplot(data2, aes(sex, meal.cal, fill= sex)) +
 ![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-17-1.png)<!-- -->
 
 [^1]: <https://www.cancer.org/cancer/lung-cancer/about/key-statistics.html>
+
+[^2]: <https://www.lung.org/lung-health-diseases/lung-disease-lookup/lung-cancer/resource-library/lung-cancer-fact-sheet>
+
+[^3]: <https://gis.cdc.gov/Cancer/USCS/#/AtAGlance/>
+
+[^4]: Loprinzi CL. Laurie JA. Wieand HS. Krook JE. Novotny PJ. Kugler
+    JW. Bartel J. Law M. Bateman M. Klatt NE. et al. Prospective
+    evaluation of prognostic variables from patient-completed
+    questionnaires. North Central Cancer Treatment Group. Journal of
+    Clinical Oncology. 12(3):601-7, 1994.
