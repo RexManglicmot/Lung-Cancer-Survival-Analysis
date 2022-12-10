@@ -21,7 +21,7 @@ Things Need To DO:
 5. General Statistics about lung cancer and WHY it is important to investigate
 6. Create some cool looking plots
 7. Get Feedback 
-8. More info on Lung Cancer and why it is important to study..DONE
+8. More info on Lung Cancer and why it is important to study..DONE!
 
 
 ### Introduction
@@ -240,7 +240,7 @@ In terms of survival measures, it has traditionally been termed for studies rega
 
 Looking at the graph above, it can start at the top of the y-axis (survival measure) and decreases downward as the line moves across the x-axis (time).
 
-Censoring is an important concept in SA.
+Censoring is an important concept in SA. There is right censoring
 
 ### Limitations
 
