@@ -13,7 +13,7 @@ Hi everyone. I’m continuing building my data analysis and R skills. As such, I
 
 Things Need To DO:
 
-1. More Theory of Survival Analysis
+1. More Theory of Survival Analysis + Censoring
 2. Create a dumbbell chart
 2. Limitations
 3. Check Grammar
@@ -21,7 +21,7 @@ Things Need To DO:
 5. General Statistics about lung cancer and WHY it is important to investigate
 6. Create some cool looking plots
 7. Get Feedback 
-8. More info on Lung Cancer and why it is important to study
+8. More info on Lung Cancer and why it is important to study..DONE
 
 
 ### Introduction

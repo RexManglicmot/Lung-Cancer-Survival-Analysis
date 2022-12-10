@@ -30,7 +30,7 @@ data are my own.
 
 Things Need To DO:
 
-1.  More Theory of Survival Analysis
+1.  More Theory of Survival Analysis + Censoring
 2.  Create a dumbbell chart
 3.  Limitations
 4.  Check Grammar
@@ -39,7 +39,7 @@ Things Need To DO:
     investigate
 7.  Create some cool looking plots
 8.  Get Feedback
-9.  More info on Lung Cancer and why it is important to study
+9.  More info on Lung Cancer and why it is important to study..DONE
 
 ### Introduction
 
