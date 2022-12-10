@@ -37,18 +37,28 @@ Things Need To DO:
     investigate
 7.  Create some cool looking plots
 8.  Get Feedback
+9.  More info on Lung Cancer and why it is important to study
 
 ### Introduction
 
 ![](https://www.ilcn.org/wp-content/uploads/2021/12/142.jpg)
 
-Lung Cancer is the leading cause of most cancer deaths, taking almost up
-to 25%.[^1]Further, it is the leading cause of cancer in both men and
-females. [^2] According to a 2019 US statistic, it is the leading cause
-of cancer behind female breast cancer and male prostate cancer.[^3]
+Lung cancer (LC) is a cancer that originates within the lungs and
+metastases to lymph nodes and other organs. The picture above on the
+left is of a normal vs lung cancer. People with LC do not show clear
+symptoms in the early stages but shows when LC has metastatsized and
+advanced.[^1] The number one risk factor for is cigarette smoking and in
+the U.S. smoking is linked to 80-90% of lung cancer deaths.[^2] Further,
+considering that about 12.5% (30.8M) of US adults smoke cigarettes.[^3]
+Thus, making LC is an likely outcome for these adults and thereby a
+public health concern since it affects over 10% of the US population.
 
-Survival Rate is a method in which we can measure the time of a an event
-from the start to finish.
+Even scarier, LC is the leading cause of most cancer deaths, taking
+almost up to 25%.[^4] It is the leading cause of cancer in both men and
+females.[^5] According to a 2019 US statistic, it is the leading cause
+of cancer behind female breast cancer and male prostate cancer.[^6]
+Thereby again, making studying LC a top public health priority for both
+genders.
 
 By studying the survival rate of lung cancer patients, local and state
 governments are able to educate the population for the impending problem
@@ -66,7 +76,7 @@ This project will organized in the following chapters:
 8.  Appendix
 9.  Inspiration for this project
 
-A special acknowledgement to Loprinzo CL. et al.[^4] for their lung
+A special acknowledgement to Loprinzo CL. et al.[^7] for their lung
 cancer research and also in providing this dataset in the survival
 package.
 
@@ -498,13 +508,19 @@ ggplot(data2, aes(sex, meal.cal, fill= sex)) +
 
 ![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-17-1.png)<!-- -->
 
-[^1]: <https://www.cancer.org/cancer/lung-cancer/about/key-statistics.html>
+[^1]: <https://www.mayoclinic.org/diseases-conditions/lung-cancer/symptoms-causes/syc-20374620>
 
-[^2]: <https://www.lung.org/lung-health-diseases/lung-disease-lookup/lung-cancer/resource-library/lung-cancer-fact-sheet>
+[^2]: <https://www.cdc.gov/cancer/lung/basic_info/risk_factors.htm>
 
-[^3]: <https://gis.cdc.gov/Cancer/USCS/#/AtAGlance/>
+[^3]: <https://www.cdc.gov/tobacco/campaign/tips/resources/data/cigarette-smoking-in-united-states.html>
 
-[^4]: Loprinzi CL. Laurie JA. Wieand HS. Krook JE. Novotny PJ. Kugler
+[^4]: <https://www.cancer.org/cancer/lung-cancer/about/key-statistics.html>
+
+[^5]: <https://www.lung.org/lung-health-diseases/lung-disease-lookup/lung-cancer/resource-library/lung-cancer-fact-sheet>
+
+[^6]: <https://gis.cdc.gov/Cancer/USCS/#/AtAGlance/>
+
+[^7]: Loprinzi CL. Laurie JA. Wieand HS. Krook JE. Novotny PJ. Kugler
     JW. Bartel J. Law M. Bateman M. Klatt NE. et al. Prospective
     evaluation of prognostic variables from patient-completed
     questionnaires. North Central Cancer Treatment Group. Journal of
