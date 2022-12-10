@@ -28,11 +28,21 @@ Things Need To DO:
 
 ![](https://www.ilcn.org/wp-content/uploads/2021/12/142.jpg)
 
-Lung cancer (LC) is a cancer that originates within the lungs and metastases to lymph nodes and other organs. The picture above on the left is of a normal vs lung cancer. People with LC do not show clear symptoms in the early stages but shows when LC has metastatsized and advanced.^[https://www.mayoclinic.org/diseases-conditions/lung-cancer/symptoms-causes/syc-20374620] The number one risk factor for is cigarette smoking and in the U.S. smoking is linked to 80-90% of lung cancer deaths.^[https://www.cdc.gov/cancer/lung/basic_info/risk_factors.htm] Further, considering that about 12.5% (30.8M) of US adults smoke cigarettes.^[https://www.cdc.gov/tobacco/campaign/tips/resources/data/cigarette-smoking-in-united-states.html] Thus, making LC is an likely outcome for these adults and thereby a public health concern since it affects over 10% of the US population.
+The picture above on the left is a stark visual contrast of a normal lung of a relatively health patient vs cancer lung of a lung cancer patient. Needless to say, there is quite a difference between the two. Lung cancer (LC) is a cancer that originates within the lungs and leave a patient with shortness of breath, fluid in the chest, and the couphing of blood.^[https://www.mayoclinic.org/diseases-conditions/lung-cancer/symptoms-causes/syc-20374620#:~:text=People%20with%20lung%20cancer%20can,Coughing%20up%20blood.] People with LC do not show clear symptoms in the early cancer stages but such symptoms are readily present when LC has metastasized and advanced.^[https://www.mayoclinic.org/diseases-conditions/lung-cancer/symptoms-causes/syc-20374620] 
+
+The number one risk factor for is cigarette smoking and in the U.S. smoking is linked to 80-90% of lung cancer deaths.^[https://www.cdc.gov/cancer/lung/basic_info/risk_factors.htm] Considering that about 12.5% (30.8M) of US adults smoke cigarettes^[https://www.cdc.gov/tobacco/campaign/tips/resources/data/cigarette-smoking-in-united-states.html], it makes LC is a likely outcome for these adults and thereby a public health concern since it affects over 10% of the US population.
 
 Even scarier, LC is the leading cause of most cancer deaths, taking almost up to 25%.^[https://www.cancer.org/cancer/lung-cancer/about/key-statistics.html] It is the leading cause of cancer in both men and females.^[https://www.lung.org/lung-health-diseases/lung-disease-lookup/lung-cancer/resource-library/lung-cancer-fact-sheet] According to a 2019 US statistic, it is the leading cause of cancer behind female breast cancer and male prostate cancer.^[https://gis.cdc.gov/Cancer/USCS/#/AtAGlance/] Thereby again, making studying LC a top public health priority for both genders.
 
-By studying the survival rate of lung cancer patients, local and state governments are able to educate the population for the impending problem they can likely face. By understanding surivival rates, 
+Because of the nature of diagnosing LC patients is most observable in the late stages of cancer development, conducting a Survival Analysis Rate would be beneficial for late stage patients as it provides a quantitative measure of time (i.e. days, weeks, or even months) for them and their family members. 
+
+The objective of this project is that by studying the Survival Analysis Rate of advanced lung cancer patients, local and state governments are able to:
+
+1. Educate the 12% population for an impending problem they will likely face. 
+2. Discourage the underlying use of smoking and thereby decreasing the percentage of future LC patients.
+3. Indirectly promote individual (i.e. stop buying high-priced cigarettes with disposable income) and community (i.e., decrease CO2 emission) utility (i.e., happiness).
+
+
 
 This project will organized in the following chapters: 
 
@@ -47,7 +57,7 @@ This project will organized in the following chapters:
 9. Inspiration for this project
 
 
-A special acknowledgement to Loprinzo CL. et al.^[Loprinzi CL. Laurie JA. Wieand HS. Krook JE. Novotny PJ. Kugler JW. Bartel J. Law M. Bateman M. Klatt NE. et al. Prospective evaluation of prognostic variables from patient-completed questionnaires. North Central Cancer Treatment Group. Journal of Clinical Oncology. 12(3):601-7, 1994.] for their lung cancer research and also in providing this dataset in the survival package. 
+A special acknowledgement to Loprinzo CL. et al.^[Loprinzi CL. Laurie JA. Wieand HS. Krook JE. Novotny PJ. Kugler JW. Bartel J. Law M. Bateman M. Klatt NE. et al. Prospective evaluation of prognostic variables from patient-completed questionnaires. North Central Cancer Treatment Group. Journal of Clinical Oncology. 12(3):601-7, 1994.] for their lung cancer research and also in providing this dataset in the survival package. Special acknowledgement to the 228 advanced lung cancer patients in the study.  
 
 The raw dataset attributes are:
 
@@ -102,29 +112,27 @@ data <- cancer
 ### Cleaning the Data
 There are a couple tasks that needs to be done.
 
-First, we need to delete the number of NA values. Because each observation is an individual, it is best to delete the obersvation to get the dataset tidy. It is also not best to find take the average of some sort  unlike business data (i.e. monthly profit).
+1. we need to delete the number of NA values. Because each observation is an individual, it is best to delete the obersvation to get the dataset tidy. It is also not best to find take the average of some sort  unlike business data (i.e. monthly profit).
 
-Second, we need to convert the variables into appropoate classes based on the data description in ?cancer. For example the variable status is a number and needs to convereted to a factor. 
+2. we need to convert the variables into appropoate classes based on the data description in ?cancer. For example the variable status is a number and needs to convereted to a factor. 
 
 ```{r}
 #Count the number of NAs in the dataframe
 sum((is.na(data)))
 ```
-We have 67 NA values within out dataset. Let's use another method to locate the speicific row and location where we might find these values.
+We have 67 NA values within out dataset. Let's use another method to locate the specific row and column where we might find these NA values.
 
 ```{r}
 #find out specific observations in which there are NAs
 which(is.na(data), arr.ind=TRUE)
 ```
-Looking at the output we see a good amount in the dougle digits as well as the triple digits (100 and 200s). Interestingly though, we see that many of the NA values are in the 9th and 10 rows, the meal.cal and wt.loss variables. Let's count the number of NAs in each variable.
+Looking at the output we see a good amount in the dougle digits as well as the triple digits (100 and 200s). Interestingly though, we see that many of the NA values are in the 9th and 10th rows, the meal.cal and wt.loss variables. Let's count the number of NAs in each variable.
 
 ```{r}
 #count the number of NAs within each column
 colSums(is.na(data))
 ```
-This is interesting. We see that majority of the NAs are in columns are in meal.cal and wt.loss. The most important variables for the survival analysis are time and status which have no NAs. Much data analysis is usually done with complete datasets, so in our case, I will delete rows that contain NAs and work wit that data set. 
-
-Nonetheless, it would interesting to see if the survival analysis would significantly change. So, I will plot 2: one with the complete data set and the other with the tidy data set, data2.
+This is interesting. We see that majority of the NAs are in columns are in meal.cal and wt.loss. The most important variables for the survival analysis chart are time and status which have no NAs. Much data analysis is usually done with complete datasets, so in our case, I will delete observations that contain NAs and work with a tidy dataset. Nonetheless, it would interesting to see if the survival analysis chart would significantly change regardless if the dataset is tidy. So, I will plot 2 survival analysis charts: one with the complete dataset (data) and the other with the tidy dataset (data2).
 
 ```{r}
 #delete all the rows with NAs
@@ -223,17 +231,16 @@ ggplot(data2, aes(x=age, y=wt.loss)) +
 Now that we have explored the data. Let's go more into the theory of survial analysis.
 
 ### Survival Rate Analysis
+Survival Analysis (SA) is the studying of the time between the entry of a study to its subsequent event. SA can be broken down into Survival and Time measures.
 
 ![](https://www.ncss.com/wp-content/uploads/2012/10/Life-Table-Analysis-Survival-Plot.png){width=75%}
 
-
-Survival Analysis (SA) is the studying of the time between the entry of a study to its subsequent event. SA can be broken down into Survival and Time measures.
 
 In terms of survival measures, it has traditionally been termed for studies regarding health outcomes, i.e., the time a person starts a drug treatment to their death, the time it takes for a durg addict to resrtart taking drugs after leaving a drug rehab center. However, it has also been used for business purposes, such as the amount of time it takes for a customer to buy a product once an email with a coupon is delivered to them or the time. Therefore, SA is used for a wide vareity of applications across a plethora of industries. In terms of time measures, it can be mesaured by days, weeks, years, etc. depending on the design of the experiment. 
 
 Looking at the graph above, it can start at the top of the y-axis (survival measure) and decreases downward as the line moves across the x-axis (time).
 
-Censoring is an important concept in SA and occurs
+Censoring is an important concept in SA.
 
 ### Limitations
 
@@ -259,4 +266,5 @@ ggplot(data2, aes(sex, meal.cal, fill= sex)) +
   theme_minimal()
 ```
 
+### Inspiration for this project
 
