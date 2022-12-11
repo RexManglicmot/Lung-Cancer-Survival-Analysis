@@ -39,39 +39,42 @@ Things Need To DO:
     investigate
 7.  Create some cool looking plots
 8.  Get Feedback
-9.  More info on Lung Cancer and why it is important to study..DONE
+9.  More info on Lung Cancer and why it is important to study..DONE!
 
 ### Introduction
 
 ![](https://www.ilcn.org/wp-content/uploads/2021/12/142.jpg)
 
 The picture above on the left is a stark visual contrast of a normal
-lung of a relatively health patient vs cancer lung of a lung cancer
+lung of a relatively health patient vs. a cancer lung of a lung cancer
 patient. Needless to say, there is quite a difference between the two.
-Lung cancer (LC) is a cancer that originates within the lungs and leave
-a patient with shortness of breath, fluid in the chest, and the couphing
-of blood.[^1] People with LC do not show clear symptoms in the early
-cancer stages but such symptoms are readily present when LC has
-metastasized and advanced.[^2]
+Lung cancer (LC) is a type of cancer that originates within the lungs
+that leaves a patient with symptoms of shortness of breath, the coughing
+of blood, and fluids within the chest cavity.[^1] People with LC do not
+show these symptoms in the early LC stages but such symptoms are readily
+present when LC has metastasized to other organs and histologically
+advanced.[^2]
 
-The number one risk factor for is cigarette smoking and in the U.S.
-smoking is linked to 80-90% of lung cancer deaths.[^3] Considering that
-about 12.5% (30.8M) of US adults smoke cigarettes[^4], it makes LC is a
-likely outcome for these adults and thereby a public health concern
-since it affects over 10% of the US population.
+The number one risk factor developing LC is cigarette smoking, and in
+the US smoking is linked to 80-90% of lung cancer deaths.[^3]
+Considering about 12.5% (30.8M) of US adults smoke cigarettes[^4], it
+makes developing LC a likely outcome for these adults and thereby a
+public health concern since it affects over 10% of the US population.
 
-Even scarier, LC is the leading cause of most cancer deaths, taking
-almost up to 25%.[^5] It is the leading cause of cancer in both men and
-females.[^6] According to a 2019 US statistic, it is the leading cause
-of cancer behind female breast cancer and male prostate cancer.[^7]
-Thereby again, making studying LC a top public health priority for both
-genders.
+Going deeper into the statistics, LC is the leading cause of most cancer
+deaths, taking almost up to 25%[^5] and it is the leading cause of
+cancer in both men and females.[^6] According to a 2019 US statistic, it
+is the leading cause of cancer behind female breast cancer and male
+prostate cancer.[^7] Thereby again, making studying LC a top public
+health priority for both genders.
 
 Because of the nature of diagnosing LC patients is most observable in
 the late stages of cancer development, conducting a Survival Analysis
 Rate would be beneficial for late stage patients as it provides a
 quantitative measure of time (i.e. days, weeks, or even months) for them
-and their family members.
+and their family members. Survival Analysis furthur allows us an
+op\[portunity to improve, create, and implement initiatives regarding
+palliative and hospice care.
 
 The objective of this project is that by studying the Survival Analysis
 Rate of advanced lung cancer patients, local and state governments are
@@ -97,10 +100,11 @@ This project will organized in the following chapters:
 8.  Appendix
 9.  Inspiration for this project
 
-A special acknowledgement to Loprinzo CL. et al.[^8] for their lung
-cancer research and also in providing this dataset in the survival
-package. Special acknowledgement to the 228 advanced lung cancer
-patients in the study.
+Getting clinical data on LC patients can prove difficult. Therefore, a
+special acknowledgement to Loprinzo CL. et al.[^8] for their lung cancer
+research and also in providing this dataset in the survival package.
+Special acknowledgement to the 228 advanced lung cancer patients in the
+study.
 
 The raw dataset attributes are:
 
@@ -129,6 +133,18 @@ The raw dataset attributes are:
 
 library(survival)
 library(tidyverse)
+```
+
+    ## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──
+    ## ✔ ggplot2 3.4.0      ✔ purrr   0.3.5 
+    ## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
+    ## ✔ tidyr   1.2.1      ✔ stringr 1.5.0 
+    ## ✔ readr   2.1.3      ✔ forcats 0.5.2 
+    ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+    ## ✖ dplyr::filter() masks stats::filter()
+    ## ✖ dplyr::lag()    masks stats::lag()
+
+``` r
 library(ggpubr)
 library(skimr)
 library(ggpubr)
@@ -141,9 +157,13 @@ library(ggpubr)
 print(data(package = "survival"))
 ```
 
-So we see that the package has a bunch of datasets we can work with. So,
-let’s choose the cancer dataset and view it. Let’s store the dataset
-into a new object, data, for data cleaning.
+So, we will be using the survival package to get the dataset (the
+package has a bunch of datasets we can work with other types cancers as
+well as datasets involving survival analysis).
+
+So, let’s choose the “cancer” dataset that contains the LC patients and
+look at structure, then store it into a new object, data, for data
+cleaning.
 
 ``` r
 #see the structure of the dataset
@@ -175,14 +195,16 @@ data <- cancer
 
 There are a couple tasks that needs to be done.
 
-1.  we need to delete the number of NA values. Because each observation
-    is an individual, it is best to delete the obersvation to get the
-    dataset tidy. It is also not best to find take the average of some
-    sort unlike business data (i.e. monthly profit).
+1.  Because we looked at the structure, we see there are a few NA
+    values; we need to delete the number of NA values. Because each
+    observation is an individual, it is best to delete the observation
+    to get the dataset tidy. Unlike business data (i.e. monthly profit),
+    we cannot take the averages because we are dealing with individual
+    patients.
 
-2.  we need to convert the variables into appropoate classes based on
-    the data description in ?cancer. For example the variable status is
-    a number and needs to convereted to a factor.
+2.  We need to convert the variables into appropriate classes based on
+    the data description in “?cancer”. For example the variable status
+    is a number and needs to converted to a factor.
 
 ``` r
 #Count the number of NAs in the dataframe
@@ -191,8 +213,9 @@ sum((is.na(data)))
 
     ## [1] 67
 
-We have 67 NA values within out dataset. Let’s use another method to
-locate the specific row and column where we might find these NA values.
+We have 67 NA values within our dataset. Let’s use another method to
+locate the specific rows and columns where we might find these NA
+values.
 
 ``` r
 #find out specific observations in which there are NAs
@@ -268,10 +291,11 @@ which(is.na(data), arr.ind=TRUE)
     ## 206 206  10
     ## 209 209  10
 
-Looking at the output we see a good amount in the dougle digits as well
-as the triple digits (100 and 200s). Interestingly though, we see that
+Looking at the output we see a good amount in the double digits (10-90s)
+as well as the triple digits (100 and 200s). Interestingly , we see that
 many of the NA values are in the 9th and 10th rows, the meal.cal and
-wt.loss variables. Let’s count the number of NAs in each variable.
+wt.loss variables, respectively. Let’s count the number of NAs in each
+column.
 
 ``` r
 #count the number of NAs within each column
@@ -285,13 +309,16 @@ colSums(is.na(data))
 
 This is interesting. We see that majority of the NAs are in columns are
 in meal.cal and wt.loss. The most important variables for the survival
-analysis chart are time and status which have no NAs. Much data analysis
-is usually done with complete datasets, so in our case, I will delete
-observations that contain NAs and work with a tidy dataset. Nonetheless,
-it would interesting to see if the survival analysis chart would
-significantly change regardless if the dataset is tidy. So, I will plot
-2 survival analysis charts: one with the complete dataset (data) and the
-other with the tidy dataset (data2).
+analysis chart are time and status which have no NAs.
+
+Much data analysis is usually done with complete datasets, so in our
+case, I will delete observations that contain NAs and work with a tidy
+dataset. Nonetheless, it would interesting to see if the survival
+analysis chart would significantly change regardless if the dataset is
+tidy. So, I will plot 2 survival analysis charts: one with the complete
+dataset (data) and the other with the tidy dataset (data2).
+
+So, let’s further clean the data and check our work.
 
 ``` r
 #delete all the rows with NAs
@@ -305,6 +332,11 @@ colSums(is.na(data2))
     ##         0         0         0         0         0         0         0         0 
     ##  meal.cal   wt.loss 
     ##         0         0
+
+Ok, great! There are no NA values in our data2, our tidy dataset. Let’s
+now work on changing the variable classes to its appropriate class and
+let’s get rid of the first column since it doesnt provide any crucial
+details.
 
 ``` r
 #creat list of variable names into a object
@@ -325,7 +357,17 @@ sapply(data2, class)
 ``` r
 #get rid of irrelevant coumns
 data2 <- data2[,-1]
+
+head(data2)
 ```
+
+    ##   time status age sex ph.ecog ph.karno pat.karno meal.cal wt.loss
+    ## 2  455      2  68   1       0       90        90     1225      15
+    ## 4  210      2  57   1       1       90        60     1150      11
+    ## 6 1022      1  74   1       1       50        80      513       0
+    ## 7  310      2  68   2       2       70        60      384      10
+    ## 8  361      2  71   2       2       60        80      538       1
+    ## 9  218      2  53   1       1       70        80      825      16
 
 Great! We have correctly cleaned out data and now let’s move on the the
 best part, EDA!
@@ -408,9 +450,9 @@ whereas the female is right-skewed with a few outliers to the left.
 
 ``` r
 ggplot(data2, aes(sex, meal.cal)) +
-  geom_hex(bins = 20, color = "white")+
+  geom_hex(bins = 20, color = "white") +
   #NEED TO CHANGE COLORS
-  scale_fill_gradient(low =  "#00AFBB", high = "#FC4E07")+
+  scale_fill_gradient(low =  "#00AFBB", high = "#FC4E07") +
   theme_minimal()
 ```
 
@@ -499,7 +541,7 @@ Looking at the graph above, it can start at the top of the y-axis
 (survival measure) and decreases downward as the line moves across the
 x-axis (time).
 
-Censoring is an important concept in SA.
+Censoring is an important concept in SA. There is right censoring
 
 ### Limitations
 
