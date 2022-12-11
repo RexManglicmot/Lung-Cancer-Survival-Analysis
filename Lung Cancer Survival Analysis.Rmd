@@ -75,7 +75,7 @@ The raw dataset attributes are:
 
 
 ### Loading the Libraries
-```{r, warning=FALSE, message=FALSE}
+```{r}
 #install packages
 #install.packages('survival') #installed on 12/3/22
 #install.packages('ggpubr') installed on 12/3/22
@@ -199,16 +199,16 @@ Another interesting thing is the weight loss. It would be interested to see how 
 Based on this, we see that there males have a symmetric distribution whereas the female is right-skewed with a few outliers to the left.  
 
 ```{r}
-ggplot(data2, aes(sex, meal.cal)) +
-  geom_hex(bins = 20, color = "white")+
-  #NEED TO CHANGE COLORS
-  scale_fill_gradient(low =  "#00AFBB", high = "#FC4E07")+
-  theme_minimal()
-
-ggplot(data2, aes(x = sex, y= meal.cal, fill = sex)) +
- geom_dotplot(binaxis='y', stackdir='center') +
-  scale_fill_brewer(palette="Dark2") +
-  theme_minimal()
+# ggplot(data2, aes(sex, meal.cal)) +
+#   geom_hex(bins = 20, color = "white") +
+#   #NEED TO CHANGE COLORS
+#   scale_fill_gradient(low =  "#00AFBB", high = "#FC4E07") +
+#   theme_minimal()
+# 
+# ggplot(data2, aes(x = sex, y= meal.cal, fill = sex)) +
+#  geom_dotplot(binaxis='y', stackdir='center') +
+#   scale_fill_brewer(palette="Dark2") +
+#   theme_minimal()
 ```
 Because we are working with a small dataset, we can use a dotplot to see the number of calories both sexes had during the experiment. It seems they had roughly ~1000 calrories for both groups. (Boxplot is in the appendix).
 
@@ -227,6 +227,8 @@ ggplot(data2, aes(x=time, y=wt.loss, fill=sex)) +
   facet_wrap(~sex) +
   theme_minimal()
 ```
+
+
 ```{r}
 ggplot(data2, aes(x=age, y=wt.loss)) +
   geom_point() +
