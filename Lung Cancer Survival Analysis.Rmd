@@ -21,7 +21,7 @@ Things Need To DO:
 * General Statistics about lung cancer and WHY it is important to investigate
 * Create some cool looking plots
 * Get Feedback 
-* More info on Lung Cancer and why it is important to study..DONE!
+
 
 
 ### Introduction
@@ -232,15 +232,15 @@ Now that we have explored the data. Let's go more into the theory of survival an
 ### Survival Rate Analysis
 Survival Analysis (SA) is the studying of the time between the entry of a study to its subsequent event. SA can be broken down into Survival and Time measures.
 
-![](https://www.ncss.com/wp-content/uploads/2012/10/Life-Table-Analysis-Survival-Plot.png){width=50%}
-
+![](https://www.ncss.com/wp-content/uploads/2012/10/Life-Table-Analysis-Survival-Plot.png){width=60%}
 
 In terms of survival measures, it has traditionally been termed for studies regarding health outcomes, i.e., the time a person starts a drug treatment to their death, the time it takes for a durg addict to resrtart taking drugs after leaving a drug rehab center. However, it has also been used for business purposes, such as the amount of time it takes for a customer to buy a product once an email with a coupon is delivered to them or the time. Therefore, SA is used for a wide vareity of applications across a plethora of industries. In terms of time measures, it can be mesaured by days, weeks, years, etc. depending on the design of the experiment. 
 
 Looking at the graph above, it can start at the top of the y-axis (survival measure) and decreases downward as the line moves across the x-axis (time).
 
-Censoring is an important concept in SA. There is right censoring
+```{r}
 
+```
 
 
 
@@ -251,7 +251,7 @@ Censoring is an important concept in SA. There is right censoring
 Will complete this part when the above sections are complete.
 
 
-### Appendix: Random Plots (will fix later)
+### Appendix: Random Plots during EDA (will fix later)
 
 ```{r}
 ggplot(data2, aes(x=meal.cal, y=wt.loss)) +

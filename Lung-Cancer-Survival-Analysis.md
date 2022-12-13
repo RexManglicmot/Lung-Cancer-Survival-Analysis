@@ -17,9 +17,9 @@ Lung Cancer Survival Analysis
     id="toc-survival-rate-analysis">Survival Rate Analysis</a>
 -   <a href="#limitations" id="toc-limitations">Limitations</a>
 -   <a href="#conclusion" id="toc-conclusion">Conclusion</a>
--   <a href="#appendix-random-plots-will-fix-later"
-    id="toc-appendix-random-plots-will-fix-later">Appendix: Random Plots
-    (will fix later)</a>
+-   <a href="#appendix-random-plots-during-eda-will-fix-later"
+    id="toc-appendix-random-plots-during-eda-will-fix-later">Appendix:
+    Random Plots during EDA (will fix later)</a>
 -   <a href="#inspiration-for-this-project"
     id="toc-inspiration-for-this-project">Inspiration for this project</a>
 
@@ -41,7 +41,6 @@ Things Need To DO:
     investigate
 -   Create some cool looking plots
 -   Get Feedback
--   More info on Lung Cancer and why it is important to study..DONE!
 
 ### Introduction
 
@@ -487,7 +486,7 @@ Time measures.
 
 <img
 src="https://www.ncss.com/wp-content/uploads/2012/10/Life-Table-Analysis-Survival-Plot.png"
-style="width:50.0%" />
+style="width:60.0%" />
 
 In terms of survival measures, it has traditionally been termed for
 studies regarding health outcomes, i.e., the time a person starts a drug
@@ -504,15 +503,13 @@ Looking at the graph above, it can start at the top of the y-axis
 (survival measure) and decreases downward as the line moves across the
 x-axis (time).
 
-Censoring is an important concept in SA. There is right censoring
-
 ### Limitations
 
 ### Conclusion
 
 Will complete this part when the above sections are complete.
 
-### Appendix: Random Plots (will fix later)
+### Appendix: Random Plots during EDA (will fix later)
 
 ``` r
 ggplot(data2, aes(x=meal.cal, y=wt.loss)) +
@@ -524,7 +521,7 @@ ggplot(data2, aes(x=meal.cal, y=wt.loss)) +
 
     ## `geom_smooth()` using method = 'loess' and formula = 'y ~ x'
 
-![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-15-1.png)<!-- -->
+![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-16-1.png)<!-- -->
 
 ``` r
 ggplot(data2, aes(sex, meal.cal, fill= sex)) +
@@ -533,7 +530,7 @@ ggplot(data2, aes(sex, meal.cal, fill= sex)) +
   theme_minimal()
 ```
 
-![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-16-1.png)<!-- -->
+![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-17-1.png)<!-- -->
 
 ``` r
 ggplot(data2, aes(sex, meal.cal)) +
@@ -543,7 +540,7 @@ ggplot(data2, aes(sex, meal.cal)) +
   theme_minimal()
 ```
 
-![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-17-1.png)<!-- -->
+![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-18-1.png)<!-- -->
 
 ``` r
 ggplot(data2, aes(x=age, y=wt.loss)) +
@@ -555,7 +552,7 @@ ggplot(data2, aes(x=age, y=wt.loss)) +
 
     ## `geom_smooth()` using method = 'loess' and formula = 'y ~ x'
 
-![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-18-1.png)<!-- -->
+![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-19-1.png)<!-- -->
 
 ``` r
 ggplot(data2, aes(x=time, y=wt.loss, fill=sex)) +
@@ -567,7 +564,7 @@ ggplot(data2, aes(x=time, y=wt.loss, fill=sex)) +
 
     ## `geom_smooth()` using method = 'loess' and formula = 'y ~ x'
 
-![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-19-1.png)<!-- -->
+![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-20-1.png)<!-- -->
 \`\`\`
 
 ### Inspiration for this project
