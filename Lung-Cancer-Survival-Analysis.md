@@ -17,7 +17,9 @@ Lung Cancer Survival Analysis
     id="toc-survival-rate-analysis">Survival Rate Analysis</a>
 -   <a href="#limitations" id="toc-limitations">Limitations</a>
 -   <a href="#conclusion" id="toc-conclusion">Conclusion</a>
--   <a href="#appendix" id="toc-appendix">Appendix</a>
+-   <a href="#appendix-random-plots-will-fix-later"
+    id="toc-appendix-random-plots-will-fix-later">Appendix: Random Plots
+    (will fix later)</a>
 -   <a href="#inspiration-for-this-project"
     id="toc-inspiration-for-this-project">Inspiration for this project</a>
 
@@ -30,16 +32,16 @@ data are my own.
 
 Things Need To DO:
 
-1.  More Theory of Survival Analysis + Censoring
-2.  Create a dumbbell chart
-3.  Limitations
-4.  Check Grammar
-5.  More info on Lung Cancer and the NCCTG
-6.  General Statistics about lung cancer and WHY it is important to
+-   More Theory of Survival Analysis + Censoring
+-   Create a dumbbell chart
+-   Limitations
+-   Check Grammar
+-   More info on Lung Cancer and the NCCTG
+-   General Statistics about lung cancer and WHY it is important to
     investigate
-7.  Create some cool looking plots
-8.  Get Feedback
-9.  More info on Lung Cancer and why it is important to study..DONE!
+-   Create some cool looking plots
+-   Get Feedback
+-   More info on Lung Cancer and why it is important to study..DONE!
 
 ### Introduction
 
@@ -133,18 +135,6 @@ The raw dataset attributes are:
 
 library(survival)
 library(tidyverse)
-```
-
-    ## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──
-    ## ✔ ggplot2 3.4.0      ✔ purrr   0.3.5 
-    ## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
-    ## ✔ tidyr   1.2.1      ✔ stringr 1.5.0 
-    ## ✔ readr   2.1.3      ✔ forcats 0.5.2 
-    ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-    ## ✖ dplyr::filter() masks stats::filter()
-    ## ✖ dplyr::lag()    masks stats::lag()
-
-``` r
 library(ggpubr)
 library(skimr)
 library(ggpubr)
@@ -186,7 +176,9 @@ str(cancer)
 #provides more info about the dataset and the variables, which allows for
 #better data cleaning
 ?cancer
+```
 
+``` r
 #store cancer dataset into a new object for data manipulation
 data <- cancer
 ```
@@ -440,38 +432,33 @@ ggplot(data2, aes(x=age, group=sex, fill=sex)) +
   geom_histogram(bins = 20, color= 'black') +
   scale_fill_brewer(palette="Dark2") +
   facet_wrap(~sex) +
-  theme_minimal()
+  theme_minimal() +   
+  labs(title = 'Men and Female Age Distributions',
+       x='Age (in years)',
+       y='Count')
 ```
 
-![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
+![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
 
 Based on this, we see that there males have a symmetric distribution
 whereas the female is right-skewed with a few outliers to the left.
 
 ``` r
-ggplot(data2, aes(sex, meal.cal)) +
-  geom_hex(bins = 20, color = "white") +
-  #NEED TO CHANGE COLORS
-  scale_fill_gradient(low =  "#00AFBB", high = "#FC4E07") +
-  theme_minimal()
-```
-
-![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
-
-``` r
 ggplot(data2, aes(x = sex, y= meal.cal, fill = sex)) +
  geom_dotplot(binaxis='y', stackdir='center') +
   scale_fill_brewer(palette="Dark2") +
-  theme_minimal()
+  theme_minimal() +
+  labs(title = 'Number of Calories both Genders Consumed',
+       x = 'Gender',
+       y = 'Total Calories Per Day'
+       )
 ```
 
-    ## Bin width defaults to 1/30 of the range of the data. Pick better value with
-    ## `binwidth`.
+![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->
 
-![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-12-2.png)<!-- -->
 Because we are working with a small dataset, we can use a dotplot to see
 the number of calories both sexes had during the experiment. It seems
-they had roughly \~1000 calrories for both groups. (Boxplot is in the
+they had roughly \~1000 calories for both groups. (Boxplot is in the
 appendix).
 
 ``` r
@@ -489,32 +476,8 @@ data2 %>%
 We see that the males have a slight higher meal calories than the
 females.
 
-``` r
-ggplot(data2, aes(x=time, y=wt.loss, fill=sex)) +
-  geom_point() +
-  geom_smooth() +
-  facet_wrap(~sex) +
-  theme_minimal()
-```
-
-    ## `geom_smooth()` using method = 'loess' and formula = 'y ~ x'
-
-![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-14-1.png)<!-- -->
-
-``` r
-ggplot(data2, aes(x=age, y=wt.loss)) +
-  geom_point() +
-  geom_smooth(linetype="dashed",
-             color="orange", fill="lightpink") +
-  theme_bw()
-```
-
-    ## `geom_smooth()` using method = 'loess' and formula = 'y ~ x'
-
-![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-15-1.png)<!-- -->
-
 Now that we have explored the data. Let’s go more into the theory of
-survial analysis.
+survival analysis.
 
 ### Survival Rate Analysis
 
@@ -524,7 +487,7 @@ Time measures.
 
 <img
 src="https://www.ncss.com/wp-content/uploads/2012/10/Life-Table-Analysis-Survival-Plot.png"
-style="width:75.0%" />
+style="width:50.0%" />
 
 In terms of survival measures, it has traditionally been termed for
 studies regarding health outcomes, i.e., the time a person starts a drug
@@ -549,7 +512,7 @@ Censoring is an important concept in SA. There is right censoring
 
 Will complete this part when the above sections are complete.
 
-### Appendix
+### Appendix: Random Plots (will fix later)
 
 ``` r
 ggplot(data2, aes(x=meal.cal, y=wt.loss)) +
@@ -561,7 +524,7 @@ ggplot(data2, aes(x=meal.cal, y=wt.loss)) +
 
     ## `geom_smooth()` using method = 'loess' and formula = 'y ~ x'
 
-![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-16-1.png)<!-- -->
+![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-15-1.png)<!-- -->
 
 ``` r
 ggplot(data2, aes(sex, meal.cal, fill= sex)) +
@@ -570,7 +533,42 @@ ggplot(data2, aes(sex, meal.cal, fill= sex)) +
   theme_minimal()
 ```
 
+![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-16-1.png)<!-- -->
+
+``` r
+ggplot(data2, aes(sex, meal.cal)) +
+  geom_hex(bins = 20, color = "white") +
+  #NEED TO CHANGE COLORS
+  scale_fill_gradient(low =  "#00AFBB", high = "#FC4E07") +
+  theme_minimal()
+```
+
 ![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-17-1.png)<!-- -->
+
+``` r
+ggplot(data2, aes(x=age, y=wt.loss)) +
+  geom_point() +
+  geom_smooth(linetype="dashed",
+             color="orange", fill="lightpink") +
+  theme_bw()
+```
+
+    ## `geom_smooth()` using method = 'loess' and formula = 'y ~ x'
+
+![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-18-1.png)<!-- -->
+
+``` r
+ggplot(data2, aes(x=time, y=wt.loss, fill=sex)) +
+  geom_point() +
+  geom_smooth() +
+  facet_wrap(~sex) +
+  theme_minimal()
+```
+
+    ## `geom_smooth()` using method = 'loess' and formula = 'y ~ x'
+
+![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-19-1.png)<!-- -->
+\`\`\`
 
 ### Inspiration for this project
 

@@ -13,15 +13,15 @@ Hi everyone. I’m continuing building my data analysis and R skills. As such, I
 
 Things Need To DO:
 
-1. More Theory of Survival Analysis + Censoring
-2. Create a dumbbell chart
-2. Limitations
-3. Check Grammar
-4. More info on Lung Cancer and the NCCTG
-5. General Statistics about lung cancer and WHY it is important to investigate
-6. Create some cool looking plots
-7. Get Feedback 
-8. More info on Lung Cancer and why it is important to study..DONE!
+* More Theory of Survival Analysis + Censoring
+* Create a dumbbell chart
+* Limitations
+* Check Grammar
+* More info on Lung Cancer and the NCCTG
+* General Statistics about lung cancer and WHY it is important to investigate
+* Create some cool looking plots
+* Get Feedback 
+* More info on Lung Cancer and why it is important to study..DONE!
 
 
 ### Introduction
@@ -75,7 +75,7 @@ The raw dataset attributes are:
 
 
 ### Loading the Libraries
-```{r}
+```{r, message=FALSE}
 #install packages
 #install.packages('survival') #installed on 12/3/22
 #install.packages('ggpubr') installed on 12/3/22
@@ -101,11 +101,14 @@ So, let's choose the "cancer"  dataset that contains the LC patients and look at
 str(cancer)
 ```
 
-```{r, warning=FALSE, message=FALSE}
+```{r, eval=FALSE, message=FALSE}
 #provides more info about the dataset and the variables, which allows for
 #better data cleaning
 ?cancer
+```
 
+
+```{r}
 #store cancer dataset into a new object for data manipulation
 data <- cancer
 ```
@@ -127,6 +130,8 @@ We have 67 NA values within our dataset. Let's use another method to locate the 
 #find out specific observations in which there are NAs
 which(is.na(data), arr.ind=TRUE)
 ```
+
+
 Looking at the output we see a good amount in the double digits (10-90s) as well as the triple digits (100 and 200s). Interestingly , we see that many of the NA values are in the 9th and 10th rows, the meal.cal and wt.loss variables, respectively. Let's count the number of NAs in each column.
 
 ```{r}
@@ -186,64 +191,48 @@ Another interesting thing is the weight loss. It would be interested to see how 
 
 
 
-```{r}
+```{r, message= FALSE}
 #histogram of men and women ages
 ggplot(data2, aes(x=age, group=sex, fill=sex)) +
   geom_histogram(bins = 20, color= 'black') +
   scale_fill_brewer(palette="Dark2") +
   facet_wrap(~sex) +
-  theme_minimal()
+  theme_minimal() +   
+  labs(title = 'Men and Female Age Distributions',
+       x='Age (in years)',
+       y='Count')
 
 ```
 
 Based on this, we see that there males have a symmetric distribution whereas the female is right-skewed with a few outliers to the left.  
 
-```{r}
-ggplot(data2, aes(sex, meal.cal)) +
-  geom_hex(bins = 20, color = "white") +
-  #NEED TO CHANGE COLORS
-  scale_fill_gradient(low =  "#00AFBB", high = "#FC4E07") +
-  theme_minimal()
-
+```{r, message= FALSE}
 ggplot(data2, aes(x = sex, y= meal.cal, fill = sex)) +
  geom_dotplot(binaxis='y', stackdir='center') +
   scale_fill_brewer(palette="Dark2") +
-  theme_minimal()
+  theme_minimal() +
+  labs(title = 'Number of Calories both Genders Consumed',
+       x = 'Gender',
+       y = 'Total Calories Per Day'
+       )
 ```
-Because we are working with a small dataset, we can use a dotplot to see the number of calories both sexes had during the experiment. It seems they had roughly ~1000 calrories for both groups. (Boxplot is in the appendix).
+
+Because we are working with a small dataset, we can use a dotplot to see the number of calories both sexes had during the experiment. It seems they had roughly ~1000 calories for both groups. (Boxplot is in the appendix).
 
 ```{r}
 data2 %>%
   group_by(sex) %>%
   summarize(mean(meal.cal))
 ```
+
 We see that the males have a slight higher meal calories than the females. 
 
-
-```{r}
-ggplot(data2, aes(x=time, y=wt.loss, fill=sex)) +
-  geom_point() +
-  geom_smooth() +
-  facet_wrap(~sex) +
-  theme_minimal()
-```
-
-
-```{r}
-ggplot(data2, aes(x=age, y=wt.loss)) +
-  geom_point() +
-  geom_smooth(linetype="dashed",
-             color="orange", fill="lightpink") +
-  theme_bw()
-```
-
-
-Now that we have explored the data. Let's go more into the theory of survial analysis.
+Now that we have explored the data. Let's go more into the theory of survival analysis.
 
 ### Survival Rate Analysis
 Survival Analysis (SA) is the studying of the time between the entry of a study to its subsequent event. SA can be broken down into Survival and Time measures.
 
-![](https://www.ncss.com/wp-content/uploads/2012/10/Life-Table-Analysis-Survival-Plot.png){width=75%}
+![](https://www.ncss.com/wp-content/uploads/2012/10/Life-Table-Analysis-Survival-Plot.png){width=50%}
 
 
 In terms of survival measures, it has traditionally been termed for studies regarding health outcomes, i.e., the time a person starts a drug treatment to their death, the time it takes for a durg addict to resrtart taking drugs after leaving a drug rehab center. However, it has also been used for business purposes, such as the amount of time it takes for a customer to buy a product once an email with a coupon is delivered to them or the time. Therefore, SA is used for a wide vareity of applications across a plethora of industries. In terms of time measures, it can be mesaured by days, weeks, years, etc. depending on the design of the experiment. 
@@ -252,6 +241,9 @@ Looking at the graph above, it can start at the top of the y-axis (survival meas
 
 Censoring is an important concept in SA. There is right censoring
 
+
+
+
 ### Limitations
 
 
@@ -259,7 +251,7 @@ Censoring is an important concept in SA. There is right censoring
 Will complete this part when the above sections are complete.
 
 
-### Appendix
+### Appendix: Random Plots (will fix later)
 
 ```{r}
 ggplot(data2, aes(x=meal.cal, y=wt.loss)) +
@@ -275,6 +267,33 @@ ggplot(data2, aes(sex, meal.cal, fill= sex)) +
   scale_fill_brewer(palette="Dark2") +
   theme_minimal()
 ```
+```{r}
+ggplot(data2, aes(sex, meal.cal)) +
+  geom_hex(bins = 20, color = "white") +
+  #NEED TO CHANGE COLORS
+  scale_fill_gradient(low =  "#00AFBB", high = "#FC4E07") +
+  theme_minimal()
+```
+
+
+```{r}
+ggplot(data2, aes(x=age, y=wt.loss)) +
+  geom_point() +
+  geom_smooth(linetype="dashed",
+             color="orange", fill="lightpink") +
+  theme_bw()
+```
+```{r}
+ggplot(data2, aes(x=time, y=wt.loss, fill=sex)) +
+  geom_point() +
+  geom_smooth() +
+  facet_wrap(~sex) +
+  theme_minimal()
+```
+```
+
+
 
 ### Inspiration for this project
+
 
