@@ -240,6 +240,8 @@ Looking at the graph above, it can start at the top of the y-axis (survival meas
 
 ```{r}
 
+
+
 ```
 
 
@@ -289,7 +291,6 @@ ggplot(data2, aes(x=time, y=wt.loss, fill=sex)) +
   geom_smooth() +
   facet_wrap(~sex) +
   theme_minimal()
-```
 ```
 
 
