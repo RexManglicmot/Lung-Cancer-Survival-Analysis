@@ -86,6 +86,7 @@ library(tidyverse)
 library(ggpubr)
 library(skimr)
 library(ggpubr)
+library(ggExtra)
 ```
 ### Loading the Data
 ```{r}
@@ -224,8 +225,22 @@ data2 %>%
   group_by(sex) %>%
   summarize(mean(meal.cal))
 ```
-
 We see that the males have a slight higher meal calories than the females. 
+
+Let's see the realtionship between the patient and physician karno.
+
+```{r, warning = FALSE, message = FALSE}
+g <-ggplot(data2, aes(ph.karno, pat.karno)) +
+  geom_point(position= 'jitter') +
+  geom_smooth(method='lm')
+
+ggMarginal(g, type = 'boxplot',
+           size = 3,
+           fill=2)
+```
+
+Interesting. 
+
 
 Now that we have explored the data. Let's go more into the theory of survival analysis.
 

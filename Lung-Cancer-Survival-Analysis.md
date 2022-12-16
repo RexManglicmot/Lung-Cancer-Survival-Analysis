@@ -137,6 +137,7 @@ library(tidyverse)
 library(ggpubr)
 library(skimr)
 library(ggpubr)
+library(ggExtra)
 ```
 
 ### Loading the Data
@@ -475,6 +476,22 @@ data2 %>%
 We see that the males have a slight higher meal calories than the
 females.
 
+Let’s see the realtionship between the patient and physician karno.
+
+``` r
+g <-ggplot(data2, aes(ph.karno, pat.karno)) +
+  geom_point(position= 'jitter') +
+  geom_smooth(method='lm')
+
+ggMarginal(g, type = 'boxplot',
+           size = 3,
+           fill=2)
+```
+
+![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-15-1.png)<!-- -->
+
+Interesting.
+
 Now that we have explored the data. Let’s go more into the theory of
 survival analysis.
 
@@ -521,7 +538,7 @@ ggplot(data2, aes(x=meal.cal, y=wt.loss)) +
 
     ## `geom_smooth()` using method = 'loess' and formula = 'y ~ x'
 
-![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-16-1.png)<!-- -->
+![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-17-1.png)<!-- -->
 
 ``` r
 ggplot(data2, aes(sex, meal.cal, fill= sex)) +
@@ -530,7 +547,7 @@ ggplot(data2, aes(sex, meal.cal, fill= sex)) +
   theme_minimal()
 ```
 
-![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-17-1.png)<!-- -->
+![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-18-1.png)<!-- -->
 
 ``` r
 ggplot(data2, aes(sex, meal.cal)) +
@@ -540,7 +557,7 @@ ggplot(data2, aes(sex, meal.cal)) +
   theme_minimal()
 ```
 
-![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-18-1.png)<!-- -->
+![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-19-1.png)<!-- -->
 
 ``` r
 ggplot(data2, aes(x=age, y=wt.loss)) +
@@ -552,7 +569,7 @@ ggplot(data2, aes(x=age, y=wt.loss)) +
 
     ## `geom_smooth()` using method = 'loess' and formula = 'y ~ x'
 
-![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-19-1.png)<!-- -->
+![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-20-1.png)<!-- -->
 
 ``` r
 ggplot(data2, aes(x=time, y=wt.loss, fill=sex)) +
@@ -564,8 +581,7 @@ ggplot(data2, aes(x=time, y=wt.loss, fill=sex)) +
 
     ## `geom_smooth()` using method = 'loess' and formula = 'y ~ x'
 
-![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-20-1.png)<!-- -->
-\`\`\`
+![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-21-1.png)<!-- -->
 
 ### Inspiration for this project
 
