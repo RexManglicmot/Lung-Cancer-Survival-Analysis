@@ -138,6 +138,7 @@ library(ggpubr)
 library(skimr)
 library(ggpubr)
 library(ggExtra)
+library(RColorBrewer)
 ```
 
 ### Loading the Data
@@ -431,14 +432,20 @@ relationship between the two.
 ggplot(data2, aes(x=age, group=sex, fill=sex)) +
   geom_histogram(bins = 20, color= 'black') +
   scale_fill_brewer(palette="Dark2") +
-  facet_wrap(~sex) +
-  theme_minimal() +   
-  labs(title = 'Men and Female Age Distributions',
-       x='Age (in years)',
-       y='Count')
+  facet_wrap(~sex, scales = 'free') +
+  #scale_x_continuous(limits=c(30,90)) + #scale_y_continuous(limits=c(0,20))
+  theme_minimal()  #+
 ```
 
 ![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
+
+``` r
+     #  theme(plot.title = element_text(hjust = 0.5, size=10),
+     #    plot.caption = element_text(hjust = 0.5)) #+
+     # # labs(title = 'Men and Female Age Distributions',
+     # #   x='Age (in years)',
+     # #   y='Count')
+```
 
 Based on this, we see that there males have a symmetric distribution
 whereas the female is right-skewed with a few outliers to the left.
@@ -451,7 +458,9 @@ ggplot(data2, aes(x = sex, y= meal.cal, fill = sex)) +
   labs(title = 'Number of Calories both Genders Consumed',
        x = 'Gender',
        y = 'Total Calories Per Day'
-       )
+       ) +
+    theme(plot.title = element_text(hjust = 0.5, size=10),
+        plot.caption = element_text(hjust = 0.5))
 ```
 
 ![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->
@@ -489,6 +498,25 @@ ggMarginal(g, type = 'boxplot',
 ```
 
 ![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-15-1.png)<!-- -->
+
+Interesting.
+
+Let’s plot the time by the count by the status.
+
+``` r
+ggplot(data2, aes(x=time, fill=status)) +
+  geom_histogram(color='black', alpha =.5, position = 'identity') +
+  scale_fill_brewer(palette="Dark2") +
+   theme_minimal() +
+  labs(title = 'Time Duration of Participants',
+       x = 'Time in Days',
+       y = 'Count'
+       ) +
+   theme(plot.title = element_text(hjust = 0.5, size=10),
+        plot.caption = element_text(hjust = 0.5))
+```
+
+![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-16-1.png)<!-- -->
 
 Interesting.
 
@@ -538,7 +566,7 @@ ggplot(data2, aes(x=meal.cal, y=wt.loss)) +
 
     ## `geom_smooth()` using method = 'loess' and formula = 'y ~ x'
 
-![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-17-1.png)<!-- -->
+![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-18-1.png)<!-- -->
 
 ``` r
 ggplot(data2, aes(sex, meal.cal, fill= sex)) +
@@ -547,7 +575,7 @@ ggplot(data2, aes(sex, meal.cal, fill= sex)) +
   theme_minimal()
 ```
 
-![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-18-1.png)<!-- -->
+![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-19-1.png)<!-- -->
 
 ``` r
 ggplot(data2, aes(sex, meal.cal)) +
@@ -557,7 +585,7 @@ ggplot(data2, aes(sex, meal.cal)) +
   theme_minimal()
 ```
 
-![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-19-1.png)<!-- -->
+![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-20-1.png)<!-- -->
 
 ``` r
 ggplot(data2, aes(x=age, y=wt.loss)) +
@@ -569,7 +597,7 @@ ggplot(data2, aes(x=age, y=wt.loss)) +
 
     ## `geom_smooth()` using method = 'loess' and formula = 'y ~ x'
 
-![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-20-1.png)<!-- -->
+![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-21-1.png)<!-- -->
 
 ``` r
 ggplot(data2, aes(x=time, y=wt.loss, fill=sex)) +
@@ -581,7 +609,7 @@ ggplot(data2, aes(x=time, y=wt.loss, fill=sex)) +
 
     ## `geom_smooth()` using method = 'loess' and formula = 'y ~ x'
 
-![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-21-1.png)<!-- -->
+![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-22-1.png)<!-- -->
 
 ### Inspiration for this project
 

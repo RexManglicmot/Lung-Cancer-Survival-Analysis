@@ -87,6 +87,7 @@ library(ggpubr)
 library(skimr)
 library(ggpubr)
 library(ggExtra)
+library(RColorBrewer)
 ```
 ### Loading the Data
 ```{r}
@@ -192,16 +193,19 @@ Another interesting thing is the weight loss. It would be interested to see how 
 
 
 
-```{r, message= FALSE}
+```{r, message= FALSE, warning= FALSE}
 #histogram of men and women ages
 ggplot(data2, aes(x=age, group=sex, fill=sex)) +
   geom_histogram(bins = 20, color= 'black') +
   scale_fill_brewer(palette="Dark2") +
-  facet_wrap(~sex) +
-  theme_minimal() +   
-  labs(title = 'Men and Female Age Distributions',
-       x='Age (in years)',
-       y='Count')
+  facet_wrap(~sex, scales = 'free') +
+  #scale_x_continuous(limits=c(30,90)) + #scale_y_continuous(limits=c(0,20))
+  theme_minimal()  #+
+     #  theme(plot.title = element_text(hjust = 0.5, size=10),
+     #    plot.caption = element_text(hjust = 0.5)) #+
+     # # labs(title = 'Men and Female Age Distributions',
+     # #   x='Age (in years)',
+     # #   y='Count')
 
 ```
 
@@ -215,7 +219,9 @@ ggplot(data2, aes(x = sex, y= meal.cal, fill = sex)) +
   labs(title = 'Number of Calories both Genders Consumed',
        x = 'Gender',
        y = 'Total Calories Per Day'
-       )
+       ) +
+    theme(plot.title = element_text(hjust = 0.5, size=10),
+        plot.caption = element_text(hjust = 0.5))
 ```
 
 Because we are working with a small dataset, we can use a dotplot to see the number of calories both sexes had during the experiment. It seems they had roughly ~1000 calories for both groups. (Boxplot is in the appendix).
@@ -241,6 +247,22 @@ ggMarginal(g, type = 'boxplot',
 
 Interesting. 
 
+Let's plot the time by the count by the status.
+```{r, warning=FALSE, message= FALSE}
+ggplot(data2, aes(x=time, fill=status)) +
+  geom_histogram(color='black', alpha =.5, position = 'identity') +
+  scale_fill_brewer(palette="Dark2") +
+   theme_minimal() +
+  labs(title = 'Time Duration of Participants',
+       x = 'Time in Days',
+       y = 'Count'
+       ) +
+   theme(plot.title = element_text(hjust = 0.5, size=10),
+        plot.caption = element_text(hjust = 0.5))
+  
+```
+
+Interesting.
 
 Now that we have explored the data. Let's go more into the theory of survival analysis.
 
