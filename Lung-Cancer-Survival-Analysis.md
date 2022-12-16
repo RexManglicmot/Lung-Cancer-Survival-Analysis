@@ -41,6 +41,8 @@ Things Need To DO:
     investigate
 -   Create some cool looking plots
 -   Get Feedback
+-   Learn more about the color hexadecimal color codes/palletes–need to
+    be more artistic!!
 
 ### Introduction
 
@@ -584,14 +586,15 @@ library(ggsurvfit)
 data2$status <-as.numeric(data2$status)
 
 survfit2(Surv(time, status) ~ 1, data = data2) %>%
-  ggsurvfit() +
+  ggsurvfit(color = "#B2182B") +
+    add_confidence_interval(fill = "#B2182B") +
   labs(
     title = 'Survival Analysis Probability of LC Patients',
     x = "Days",
     y = "Survival Probability of Cohort"
   ) +
   add_confidence_interval() +
-  add_risktable()
+  add_risktable() 
 ```
 
 ![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-19-1.png)<!-- -->
@@ -602,7 +605,8 @@ Let’s plot the original dataset, data.
 
 ``` r
 survfit2(Surv(time, status) ~ 1, data = data) %>%
-  ggsurvfit() +
+   ggsurvfit(color = "#82AC7C") +
+    add_confidence_interval(fill = "#82AC7C") +
   labs(
     title = 'Survival Analysis Probability of LC Patients',
     x = "Days",
