@@ -41,8 +41,12 @@ Things Need To DO:
     investigate
 -   Create some cool looking plots
 -   Get Feedback
--   Learn more about the color hexadecimal color codes/palletes–need to
+-   Learn more about the color hexadecimal color codes/palettes–need to
     be more artistic!!
+-   How do I draw arrows showing the median on the survival plot? How do
+    I change the colors of the survival plot when there are two groups?
+-   Need to segment age and turn them into a factor group and run the
+    survival plot
 
 ### Introduction
 
@@ -559,20 +563,10 @@ Surv(data2$time, data2$status)[1:10]
 
     ##  [1]  455:2  210:2 1022+   310:2  361:2  218:2  166:2  170:2  567:2  613:2
 
-Let’s take a look at the dataset.
+Interesting.
 
-Let’s create a new object for survival analysis and double check we got
-all the observations from the previous code chunk.
-
-``` r
-# #create a km object
-# km <-with(data2, Surv(time, status))
-# 
-# #check 
-# head(km, 10)
-```
-
-Let’s create the survival plot.
+Let’s create the survival plot but first, we need to add some libraries
+and convert the status column back to a numeric.
 
 ``` r
 #install.packages('ggsurvfit') #installed on 12/15/22
@@ -594,10 +588,13 @@ survfit2(Surv(time, status) ~ 1, data = data2) %>%
     y = "Survival Probability of Cohort"
   ) +
   add_confidence_interval() +
-  add_risktable() 
+  add_risktable() +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5, size=10),
+        plot.caption = element_text(hjust = 0.5))
 ```
 
-![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-19-1.png)<!-- -->
+![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-18-1.png)<!-- -->
 
 Interesting
 
@@ -613,12 +610,60 @@ survfit2(Surv(time, status) ~ 1, data = data) %>%
     y = "Survival Probability of Cohort"
   ) +
   add_confidence_interval() +
-  add_risktable()
+  add_risktable() +
+    theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5, size=10),
+        plot.caption = element_text(hjust = 0.5))
 ```
 
-![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-20-1.png)<!-- -->
+![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-19-1.png)<!-- -->
 
-Interesting. How do I compare the two?
+Interesting. Difficult to tell a difference between the two, but the
+tables below help us interpret significantly. There is a difference.
+
+Let’s estimate 1 year ahead and the median.
+
+``` r
+#the time is in days in data2, so in the function we specify in days as well (days is default)
+summary(survfit(Surv(time, status) ~ 1, data= data2), times=365)
+```
+
+    ## Call: survfit(formula = Surv(time, status) ~ 1, data = data2)
+    ## 
+    ##  time n.risk n.event survival std.err lower 95% CI upper 95% CI
+    ##   365     49      87    0.415  0.0422         0.34        0.506
+
+``` r
+survfit(Surv(time, status) ~ 1, data=data2)
+```
+
+    ## Call: survfit(formula = Surv(time, status) ~ 1, data = data2)
+    ## 
+    ##        n events median 0.95LCL 0.95UCL
+    ## [1,] 167    120    310     285     371
+
+Survival is 41% for 1 year. Median survival days is 310.
+
+Let’s plot for different groups, like gender.
+
+``` r
+survfit2(Surv(time, status) ~ sex, data = data2) %>%
+  ggsurvfit() +
+  scale_color_grey() +
+  scale_fill_grey() +
+  labs(
+    title = 'Survival Analysis Probability of LC Patients Based On Sex',
+    x = "Days",
+    y = "Overall survival probability"
+    ) + 
+  add_confidence_interval() +
+  add_risktable() +
+    theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5, size=10),
+        plot.caption = element_text(hjust = 0.5))
+```
+
+![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-21-1.png)<!-- -->
 
 ### Limitations
 
@@ -638,7 +683,7 @@ ggplot(data2, aes(x=meal.cal, y=wt.loss)) +
 
     ## `geom_smooth()` using method = 'loess' and formula = 'y ~ x'
 
-![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-21-1.png)<!-- -->
+![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-22-1.png)<!-- -->
 
 ``` r
 ggplot(data2, aes(sex, meal.cal, fill= sex)) +
@@ -647,7 +692,7 @@ ggplot(data2, aes(sex, meal.cal, fill= sex)) +
   theme_minimal()
 ```
 
-![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-22-1.png)<!-- -->
+![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-23-1.png)<!-- -->
 
 ``` r
 ggplot(data2, aes(sex, meal.cal)) +
@@ -657,7 +702,7 @@ ggplot(data2, aes(sex, meal.cal)) +
   theme_minimal()
 ```
 
-![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-23-1.png)<!-- -->
+![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-24-1.png)<!-- -->
 
 ``` r
 ggplot(data2, aes(x=age, y=wt.loss)) +
@@ -669,7 +714,7 @@ ggplot(data2, aes(x=age, y=wt.loss)) +
 
     ## `geom_smooth()` using method = 'loess' and formula = 'y ~ x'
 
-![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-24-1.png)<!-- -->
+![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-25-1.png)<!-- -->
 
 ``` r
 ggplot(data2, aes(x=time, y=wt.loss, fill=sex)) +
@@ -681,7 +726,7 @@ ggplot(data2, aes(x=time, y=wt.loss, fill=sex)) +
 
     ## `geom_smooth()` using method = 'loess' and formula = 'y ~ x'
 
-![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-25-1.png)<!-- -->
+![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-26-1.png)<!-- -->
 
 ### Inspiration for this project
 

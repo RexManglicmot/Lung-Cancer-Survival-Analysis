@@ -21,7 +21,10 @@ Things Need To DO:
 * General Statistics about lung cancer and WHY it is important to investigate
 * Create some cool looking plots
 * Get Feedback 
-* Learn more about the color hexadecimal color codes/palletes--need to be more artistic!!
+* Learn more about the color hexadecimal color codes/palettes--need to be more artistic!!
+* How do I draw arrows showing the median on the survival plot?
+How do I change the colors of the survival plot when there are two groups?
+* Need to segment age and turn them into a factor group and run the survival plot
 
 
 
@@ -282,19 +285,9 @@ Create survival objects
 #take a look each observations survial time
 Surv(data2$time, data2$status)[1:10]
 ```
-Let's take a look at the dataset.
+Interesting.
 
-
-Let's create a new object for survival analysis and double check we got all the observations from the previous code chunk. 
-```{r}
-# #create a km object
-# km <-with(data2, Surv(time, status))
-# 
-# #check 
-# head(km, 10)
-```
-
-Let's create the survival plot.
+Let's create the survival plot but first, we need to add some libraries and convert the status column back to a numeric. 
 ```{r}
 #install.packages('ggsurvfit') #installed on 12/15/22
 #install.packages('survminer') #installed on 12/15/22
@@ -315,7 +308,10 @@ survfit2(Surv(time, status) ~ 1, data = data2) %>%
     y = "Survival Probability of Cohort"
   ) +
   add_confidence_interval() +
-  add_risktable() 
+  add_risktable() +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5, size=10),
+        plot.caption = element_text(hjust = 0.5))
 ```
 
 Interesting
@@ -331,10 +327,44 @@ survfit2(Surv(time, status) ~ 1, data = data) %>%
     y = "Survival Probability of Cohort"
   ) +
   add_confidence_interval() +
-  add_risktable()
+  add_risktable() +
+    theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5, size=10),
+        plot.caption = element_text(hjust = 0.5))
 ```
 
-Interesting. How do I compare the two?
+Interesting. Difficult to tell a difference between the two, but the tables below help us interpret significantly. There is a difference.
+
+Let's estimate 1 year ahead and the median.
+
+```{r}
+#the time is in days in data2, so in the function we specify in days as well (days is default)
+summary(survfit(Surv(time, status) ~ 1, data= data2), times=365)
+
+survfit(Surv(time, status) ~ 1, data=data2)
+```
+
+Survival is 41% for 1 year. Median survival days is 310.
+
+Let's plot for different groups, like gender.
+
+```{r}
+survfit2(Surv(time, status) ~ sex, data = data2) %>%
+  ggsurvfit() +
+  scale_color_grey() +
+  scale_fill_grey() +
+  labs(
+    title = 'Survival Analysis Probability of LC Patients Based On Sex',
+    x = "Days",
+    y = "Overall survival probability"
+    ) + 
+  add_confidence_interval() +
+  add_risktable() +
+    theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5, size=10),
+        plot.caption = element_text(hjust = 0.5))
+```
+
 
 
 ### Limitations
