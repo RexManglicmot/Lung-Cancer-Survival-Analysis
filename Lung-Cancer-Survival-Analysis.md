@@ -548,6 +548,74 @@ Looking at the graph above, it can start at the top of the y-axis
 (survival measure) and decreases downward as the line moves across the
 x-axis (time).
 
+Create survival objects
+
+``` r
+#take a look each observations survial time
+Surv(data2$time, data2$status)[1:10]
+```
+
+    ##  [1]  455:2  210:2 1022+   310:2  361:2  218:2  166:2  170:2  567:2  613:2
+
+Let’s take a look at the dataset.
+
+Let’s create a new object for survival analysis and double check we got
+all the observations from the previous code chunk.
+
+``` r
+# #create a km object
+# km <-with(data2, Surv(time, status))
+# 
+# #check 
+# head(km, 10)
+```
+
+Let’s create the survival plot.
+
+``` r
+#install.packages('ggsurvfit') #installed on 12/15/22
+#install.packages('survminer') #installed on 12/15/22
+
+library(ggsurvfit)
+# library(survminer)
+
+#tip: status column needs to be NUMERIC and NOT A FACTOR, otherwise, error when plotting
+#convert data2$status back to a numeric for plotting
+data2$status <-as.numeric(data2$status)
+
+survfit2(Surv(time, status) ~ 1, data = data2) %>%
+  ggsurvfit() +
+  labs(
+    title = 'Survival Analysis Probability of LC Patients',
+    x = "Days",
+    y = "Survival Probability of Cohort"
+  ) +
+  add_confidence_interval() +
+  add_risktable()
+```
+
+![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-19-1.png)<!-- -->
+
+Interesting
+
+Let’s plot the original dataset, data.
+
+``` r
+survfit2(Surv(time, status) ~ 1, data = data) %>%
+  ggsurvfit() +
+  labs(
+    title = 'Survival Analysis Probability of LC Patients',
+    x = "Days",
+    y = "Survival Probability of Cohort"
+  ) +
+  add_confidence_interval() +
+  add_risktable()
+```
+
+![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-20-1.png)<!-- -->
+
+Interesting. How do I compare the two?
+
 ### Limitations
 
 ### Conclusion
@@ -566,7 +634,7 @@ ggplot(data2, aes(x=meal.cal, y=wt.loss)) +
 
     ## `geom_smooth()` using method = 'loess' and formula = 'y ~ x'
 
-![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-18-1.png)<!-- -->
+![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-21-1.png)<!-- -->
 
 ``` r
 ggplot(data2, aes(sex, meal.cal, fill= sex)) +
@@ -575,7 +643,7 @@ ggplot(data2, aes(sex, meal.cal, fill= sex)) +
   theme_minimal()
 ```
 
-![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-19-1.png)<!-- -->
+![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-22-1.png)<!-- -->
 
 ``` r
 ggplot(data2, aes(sex, meal.cal)) +
@@ -585,7 +653,7 @@ ggplot(data2, aes(sex, meal.cal)) +
   theme_minimal()
 ```
 
-![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-20-1.png)<!-- -->
+![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-23-1.png)<!-- -->
 
 ``` r
 ggplot(data2, aes(x=age, y=wt.loss)) +
@@ -597,7 +665,7 @@ ggplot(data2, aes(x=age, y=wt.loss)) +
 
     ## `geom_smooth()` using method = 'loess' and formula = 'y ~ x'
 
-![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-21-1.png)<!-- -->
+![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-24-1.png)<!-- -->
 
 ``` r
 ggplot(data2, aes(x=time, y=wt.loss, fill=sex)) +
@@ -609,7 +677,7 @@ ggplot(data2, aes(x=time, y=wt.loss, fill=sex)) +
 
     ## `geom_smooth()` using method = 'loess' and formula = 'y ~ x'
 
-![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-22-1.png)<!-- -->
+![](Lung-Cancer-Survival-Analysis_files/figure-gfm/unnamed-chunk-25-1.png)<!-- -->
 
 ### Inspiration for this project
 

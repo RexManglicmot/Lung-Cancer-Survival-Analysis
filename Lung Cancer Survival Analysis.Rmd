@@ -275,12 +275,63 @@ In terms of survival measures, it has traditionally been termed for studies rega
 
 Looking at the graph above, it can start at the top of the y-axis (survival measure) and decreases downward as the line moves across the x-axis (time).
 
+
+Create survival objects
 ```{r}
+#take a look each observations survial time
+Surv(data2$time, data2$status)[1:10]
+```
+Let's take a look at the dataset.
 
 
-
+Let's create a new object for survival analysis and double check we got all the observations from the previous code chunk. 
+```{r}
+# #create a km object
+# km <-with(data2, Surv(time, status))
+# 
+# #check 
+# head(km, 10)
 ```
 
+Let's create the survival plot.
+```{r}
+#install.packages('ggsurvfit') #installed on 12/15/22
+#install.packages('survminer') #installed on 12/15/22
+
+library(ggsurvfit)
+# library(survminer)
+
+#tip: status column needs to be NUMERIC and NOT A FACTOR, otherwise, error when plotting
+#convert data2$status back to a numeric for plotting
+data2$status <-as.numeric(data2$status)
+
+survfit2(Surv(time, status) ~ 1, data = data2) %>%
+  ggsurvfit() +
+  labs(
+    title = 'Survival Analysis Probability of LC Patients',
+    x = "Days",
+    y = "Survival Probability of Cohort"
+  ) +
+  add_confidence_interval() +
+  add_risktable()
+```
+
+Interesting
+
+Let's plot the original dataset, data.
+```{r}
+survfit2(Surv(time, status) ~ 1, data = data) %>%
+  ggsurvfit() +
+  labs(
+    title = 'Survival Analysis Probability of LC Patients',
+    x = "Days",
+    y = "Survival Probability of Cohort"
+  ) +
+  add_confidence_interval() +
+  add_risktable()
+```
+
+Interesting. How do I compare the two?
 
 
 ### Limitations
